@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles/main.css" />
+    <title>Введи дані для написання скарги :</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Введи дані для написання скарги :</h1>
+
+        <!-- Логін-форма -->
+        <form id="loginForm">
+            <label for="username">Логін:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Увійти</button>
+        </form>
+
+        <!-- Форма реєстрації -->
+        <form id="registerForm" class="hidden">
+            <label for="newUsername">Логін:</label>
+            <input type="text" id="newUsername" name="newUsername" required>
+            <label for="newPassword">Пароль:</label>
+            <input type="password" id="newPassword" name="newPassword" required>
+            <button type="submit">Зареєструватися</button>
+        </form>
+
+        <!-- Форма подачі заявки -->
+        <form id="jobForm" class="hidden">
+            <label for="full_name">Повне ім'я:</label>
+            <input type="text" id="full_name" name="full_name" required>
+            <label for="email">Емейл:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">Номер телефону:</label>
+            <input type="text" id="phone" name="phone" required>
+            <label for="resume">Скарга:</label>
+            <textarea id="resume" name="resume" rows="5" required></textarea>
+            <button type="submit">Відправити</button>
+        </form>
+
+        <!-- Повідомлення подяки -->
+        <div class="message" id="thankYouMessage">
+            <h1>Дякуємо за скаргу!</h1>
+            <p>Ваша скарга прийнята. Ми зателефонуємо Вам пізніше щодо вирішення проблеми!</p>
+        </div>
+
+        <!-- Кнопка для реєстрації, якщо у користувача немає акаунта -->
+        <div id="registerPrompt" class="hidden">
+            <p>Ще не маєте акаунта? <button class="register-btn" id="registerLink">Зареєструйтесь</button></p>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const jobForm = document.getElementById('jobForm');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+        const registerPrompt = document.getElementById('registerPrompt');
+
+        const validUsername = 'roman';
+        const validPassword = '1234';
+
+        // Для демонстрації: об'єкт для зберігання зареєстрованих користувачів
+        const usersDatabase = {};
+
+        // Форма логіну
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === validUsername && password === validPassword) {
+                loginForm.style.display = 'none'; // Ховаємо логін-форму
+                jobForm.classList.remove('hidden'); // Показуємо форму заявки
+            } else {
+                alert('Невірний логін або пароль!');
+                registerPrompt.classList.remove('hidden'); // Показуємо запит на реєстрацію
+            }
+        });
+
+        // Форма реєстрації
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newUsername = document.getElementById('newUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            // Реєструємо нового користувача
+            usersDatabase[newUsername] = newPassword;
+
+            alert('Ви успішно зареєстровані!');
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // Кнопка для реєстрації
+        document.getElementById('registerLink').addEventListener('click', function() {
+            loginForm.style.display = 'none'; // Ховаємо логін-форму
+            registerForm.classList.remove('hidden'); // Показуємо форму реєстрації
+        });
+
+        // Обробка форми подачі заявки
+        jobForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            jobForm.style.display = 'none'; // Ховаємо форму заявки
+            thankYouMessage.style.display = 'block'; // Показуємо повідомлення подяки
+        });
+    </script>
+</body>
+</html>

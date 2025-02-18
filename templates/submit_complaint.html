@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Створення вакансії</title>
+    <style>
+        /* Add your CSS here */
+    </style>
+</head>
+<body>
+    <h1>Подати скаргу</h1>
+    <a href="/logout">Вихід</a>
+
+    <div class="container">
+        <h2>Введіть дані для подачі скарги:</h2>
+        <form method="POST" action="/submit_complaint">
+            <label for="full_name">Повне ім'я:</label>
+            <input type="text" id="full_name" name="full_name" required>
+
+            <label for="email">Емейл:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Номер телефону:</label>
+            <input type="text" id="phone" name="phone" required>
+
+            <label for="resume">Резюме:</label>
+            <textarea id="resume" name="resume" rows="5" required></textarea>
+
+            <button type="submit">Відправити</button>
+        </form>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
